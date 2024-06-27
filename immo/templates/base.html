@@ -1,0 +1,101 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>mn-Immo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+.container .logo{
+    border-radius: 50%;
+}
+a{
+text-decoration: none;
+color: white;
+}
+.user{
+  font-size:1.5rem;
+}
+
+.logout{
+  font-size:1.5rem;
+  margin: 0px 10px;
+}
+
+    </style>
+    </head>
+  <body>
+    <div class="">
+        <nav class="navbar navbar-expand-lg bg-secondary bg-gradient">
+            <div class="container">
+               <a class="navbar-brand" href="#">
+                    <img class="logo" src="{% static 'logo/1.png' %}" alt="logo" width="50" height="44">
+              </a>
+              <a class="navbar-brand text-white" href="{% url 'index' %}">MN-Immo</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active text-white" aria-current="page" href="{% url 'index' %}">Acceuil</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Acheter
+                    </a>
+                    <ul class="dropdown-menu bg-secondary bg-gradient">
+                      <li><a class="dropdown-item" href="{% url 'maisonAV' %}">Maison</a></li>
+                      <li><a class="dropdown-item" href="{% url 'terrain' %}">Terrain</a></li>
+                      <li><a class="dropdown-item" href="{% url 'appartementAV' %}">Appartement</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Location
+                    </a>
+                    <ul class="dropdown-menu bg-secondary bg-gradient">
+                      <li><a class="dropdown-item" href="{% url 'maisonLou' %}">Maison</a></li>
+                      <li><a class="dropdown-item" href="{% url 'appartementLou' %}">Appartement</a></li>
+
+                    </ul>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Vendre/Louer
+                    </a>
+                    <ul class="dropdown-menu bg-secondary bg-gradient">
+                      <li><a class="dropdown-item" href="#">Vendre un bien</a></li>
+                      <li><a class="dropdown-item" href="#">Louer un bien</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'agent' %}">Agent Immobilier</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Contact</a>
+                  </li>
+                </ul>
+                <form class="d-flex" role="search">
+                  {% if user.is_authenticated %}
+                  <a class="user text-white" href="{% url 'profil' %}">{{ user.username }}</a>
+                  <a href="{% url 'logout' %}"><i class="logout bi bi-box-arrow-right me-2 text-white"></i></a>
+                  {% else %}
+                  <button type="button" class="btn btn-outline-dark"><a href="{% url 'login' %}"><i class="bi bi-person-circle"> S'identifier</i></a></button>
+                  {% endif %}
+
+                </form>
+              </div>
+            </div>
+          </nav>
+    </div>
+
+{% block content %}
+
+{% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>

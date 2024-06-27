@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<style>
+.search{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search .categories_btn{
+    width: 200px;
+    height: 50px;
+}
+
+.search .categories_dropdown{
+    width: 200px;
+}
+
+.search .search_input{
+    height: 50px;
+}
+
+  .detail .zone_detail1{
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.detail .zone_detail1 .droit{
+    width:170vh;
+    margin-right: 50px;
+}
+
+.zone_detail1 .droit h4{
+  margin-top: 20px;
+  text-align: center;
+  font-size: 2rem;
+  color:rgb(255, 179, 0);
+}
+
+.zone_detail1 .droit .desc{
+  margin: 5px 30px;
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.zone_detail1 .droit .infos p{
+  font-weight: 500;
+  color:rgb(255, 179, 0);
+}
+
+.infos{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 30px;
+}
+
+.detail .zone_detail1 .gauche h4{
+    font-size: 1.8rem;
+    color:rgb(255, 179, 0);
+    text-decoration: underline;
+}
+</style>
+<div class="container search">
+        <div class="dropdown categories m-3">
+            <button class="categories_btn btn  bg-warning-subtle dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Types de proprietes
+            </button>
+            <ul class="categories_dropdown dropdown-menu bg-warning-subtle">
+              <li><a class="dropdown-item" href="#">Maison</a></li>
+                <li><a class="dropdown-item" href="#">Terrain</a></li>
+                <li><a class="dropdown-item" href="#">Appartement</a></li>
+                <li><a class="dropdown-item" href="#">Villa</a></li>
+            </ul>
+        </div>
+        <form class="search_input input-group m-3">
+          <input type="search" class="form-control" placeholder="Que recherchez vous" name="item_name" aria-label="search">
+          <button class="btn btn-outline-success" type="submit" id="button-addon2">Recherche</button>
+        </form>
+</div>
+<div class="container detail">
+      <div class="zone_index">
+        <div id="carouselExampleFade" class="carousel slide carousel-fade">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="{{ property.image.url }}" class="d-block w-100" alt="..." height="600px">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+      <div class="zone_detail1">
+        <div class="droit">
+          <div class="card">
+            <h4>{{ property.property_type }} situe a {{ property.address }}</h4>
+            <div class="infos">
+              <p><img src="{% static 'logo/lit.png' %}" alt="" width="20px"> {{ property.nbr_chambre }}</p>
+              <p>{{ property.nbr_salle_bain }} <img src="{% static 'logo/bain.png' %}" alt="" width="20px"></p>
+                <p><img src="image/bain.png" alt="" width="20px"><i class="bi bi-bounding-box-circles text-black m-1"></i>{{ property.width }}x{{ property.height }}</p>
+            </div>
+            <p class="desc">{{ property.desc }}</p>
+            <div class="infos">
+              <p>Localisation: {{ property.city }}</p>
+              <p>A {{ property.status }}</p>
+              <p>Price: {{ property.price }} $</p>
+            </div>
+          </div>
+        </div>
+        <div class="gauche">
+          <h4 class="mb-4">Meme categories</h4>
+          {% for property_relations in property_relation %}
+          {% if property_relations.id != property.id %}
+          <div class="card mb-3">
+              <img src="{{ property_relations.image.url }}" class="card-img-top" alt="..." height="300px">
+              <div class="card-body">
+                <h5 class="card-title">{{ property_relations.property_type}}</h5>
+                <h6>Localisation: {{ property_relations.address }}</h6>
+                <h6 style="color: rgb(209, 171, 0);">Prix: {{ property_relations.price }} $</h6>
+                <div class="d-flex" role="search">
+                  <button type="button" class="btn btn-warning me-2" style="color: rgb(0, 0, 0);">
+                    <a href="{% url 'detail' property_relations.id %}">Voire</a>
+                  </button>
+                </div>
+              </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+</div>
+{% endblock %}

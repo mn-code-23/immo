@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<style>
+   .carte{
+    width: 100%;
+    /* height: 80px; */
+    border-radius: 10px;
+    border: 1px solid rgb(198, 197, 197);
+    /* margin: 5px; */
+}
+.carte .grid{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 12px;
+}
+
+.carte .grid .block{
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+
+.carte .grid .block .image img{
+    border-radius: 50%;
+}
+.carte .grid .block .infos{
+    display: block;
+    margin-left: 15px;
+    /* position: relative; */
+    /* flex-direction: column; */
+}
+
+.carte .grid .block .infos h6{
+    margin: 3px 0px;
+}
+
+.carte .grid .chat a{
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: orange;
+
+}
+</style>
+<div class="container">
+    <h1 class="text-center m-3">Tous Nos Agents Immobilier</h1>
+    {% for agents in agent %}
+      <div class="carte mt-3">
+        <div class="grid">
+          <div class="block">
+            <div class="image">
+              <img src="{{ agents.photo.url }}" alt="" width="70px" height="70px">
+            </div>
+            <div class="infos">
+              <h6>{{ agents.user.username }}</h6>
+              <h6>{{ agents.user.email }}</h6>
+              <h6>Sa note</h6>
+              <h6>{{ agents.bio }}</h6>
+            </div>
+          </div>
+          <div class="chat">
+            <a href="#">Discutons</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+</div>
+{% endblock %}
